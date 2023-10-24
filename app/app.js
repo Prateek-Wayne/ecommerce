@@ -1,0 +1,10 @@
+import express from 'express';
+import database from '../config/db.js';
+import userRoute from '../routes/userRoutes.js';
+import dotenv from 'dotenv';
+dotenv.config();
+await database();
+const app=express();
+app.use(express.json());
+app.use('/',userRoute);
+export default app;
