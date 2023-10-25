@@ -1,0 +1,18 @@
+express-async-handler
+create a global error handler middleware named:"globalErrHandler.js"
+.....................
+Create a handler for all 404 not found errors:Mean to create a handlder for enpoints that are not defined
+
+
+
+const bcrypt = require('bcrypt');
+
+const password = 'myPassword123';
+
+// Generate a salt to use for the hash
+const salt = await bcrypt.genSalt(10);
+
+// Hash the password with the salt
+const hashedPassword = await bcrypt.hash(password, salt);
+
+console.log(hashedPassword);
