@@ -36,38 +36,34 @@ export const registerUserCtrl = async (req, res) => {
 };
 
 export const loginUserCtrl = async (req, res) => {
-    res.status(401).json({
-        success:true,
-        msg:"Hello ji"
-    })
-    // try {
-    //     const { email, password } = req.body;
-    //     const userExist = await User.findOne(email);
-    //     if (!userExist) {
-    //         return res.status(401).json({
-    //             success: false,
-    //             msg: "wrong email || password"
-    //         });
-    //     }
-    //     const isLegit = await bcrypt.compare(password, userExist.password);
-    //     if (!isLegit) {
-    //         return res.status(401).json({
-    //             success: false,
-    //             msg: "wrong email || password"
-    //         })
-    //     }
-    //     return res.status(200).json({
-    //         success: true,
-    //         userExist,
-    //         token: generateToken(userExist?._id),
-    //     })
+    try {
+        const { email, password } = req.body;
+        const userExist = await User.findOne({email});
+        if (!userExist) {
+            return res.status(401).json({
+                success: false,
+                msg: "wrong email || password"
+            });
+        }
+        const isLegit = await bcrypt.compare(password, userExist.password);
+        if (!isLegit) {
+            return res.status(401).json({
+                success: false,
+                msg: "wrong email || password"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            userExist,
+            token: generateToken(userExist?._id),
+        })
 
-    // } catch (error) {
-    //     return res.status(401).json(
-    //         {
-    //             success: false,
-    //             msg: error
-    //         }
-    //     )
-    // }
+    } catch (error) {
+        return res.status(401).json(
+            {
+                success: false,
+                msg: error.message
+            }
+        )
+    }
 };
