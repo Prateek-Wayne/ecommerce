@@ -115,3 +115,60 @@ export const getProductsCtrl = async (req, res) => {
 
     }
 }
+
+export const getProductCtrl=async (req,res)=>{
+    try {
+        const singleProduct=await Product.findById(req.params.id) ;
+        if(!singleProduct)
+        {
+            return res.status(200).json({
+                success:false,
+                msg:"Product Not found 😔",
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            msg:"Product fetched successfully..🚀🫡",
+            singleProduct
+        })
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+}
+export const getSingleProductCtrl = async (req, res) => {
+    try {
+        const singleProduct = await Product.findById(req.params.id);
+        if (!singleProduct) {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            msg: "Product fetched successfully..🚀🫡",
+            singleProduct,
+        });
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
+    }
+};
+
