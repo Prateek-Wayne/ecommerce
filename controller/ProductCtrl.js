@@ -37,3 +37,21 @@ export const createProductCtrl=async(req,res)=>{
         })
     }   
 }
+
+export const getProductsCtrl=async(req,res)=>{
+    try {
+        const allProducts=await Product.find();
+        return res.status(201).json({
+            success:true,
+            allProducts,
+        })
+        
+    } catch (error) {
+        return res.status(401).json({
+            success:false,
+            msg:error.message,
+        })
+        
+    }
+}
+
