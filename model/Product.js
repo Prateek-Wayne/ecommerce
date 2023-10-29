@@ -18,7 +18,7 @@ const  ProductSchema=new Schema(
     catgory:{
         type:String,
         ref:"Category",
-        required:true,
+        // required:true,
     },
     sizes:{
         type:[String],
