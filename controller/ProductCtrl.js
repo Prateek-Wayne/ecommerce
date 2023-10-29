@@ -68,12 +68,44 @@ export const getProductsCtrl = async (req, res) => {
             const maxPrice = parseInt(range[1]);
             productsQuery = productsQuery.find({ price: { $gte: minPrice, $lte: maxPrice } });   
         }
-
-        productsQuery=await productsQuery;
-        console.log(await productsQuery);
+        // pagination....
+        // page...
+        const page=parseInt(req.query.page)?parseInt(req.query.page):1;
+        // limit...
+        const limit=parseInt(req.query.limit)?parseInt(req.query.limit):1;
+        // start...
+        const startIndex=(page-1)*limit;
+        // end...
+        const endIndex=(page)*limit;
+        //  total...
+        const total=await Product.countDocuments();
+        // applying...
+        productsQuery=productsQuery.skip(startIndex).limit(limit);
+        // pagination object...
+        const pagination={}
+        if(endIndex<total)
+        {
+            pagination.next={
+                page:page+1,
+                limit,
+            };
+        }
+        if(startIndex>0)
+        {
+            pagination.prev={
+                page:page-1,
+            limit,
+            };
+        }
+        // await the query to get data as json...
+        const products=await productsQuery;
         return res.status(200).json({
             success:true,
-            productsQuery
+            total,
+            results:products.length,
+            pagination,
+            msg:"Products fetched succcesfully🚀🫡",
+            products
         })
     } catch (error) {
         return res.status(401).json({
