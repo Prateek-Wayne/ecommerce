@@ -1,6 +1,8 @@
 import User from '../model/User.js';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/generateToken.js';
+import { getTokenFromHeader } from '../utils/getTokenFromHeader.js';
+import { verifyToken } from '../utils/verifyToken.js';
 
 export const registerUserCtrl = async (req, res) => {
     try {
@@ -38,7 +40,7 @@ export const registerUserCtrl = async (req, res) => {
 export const loginUserCtrl = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userExist = await User.findOne({email});
+        const userExist = await User.findOne({ email });
         if (!userExist) {
             return res.status(401).json({
                 success: false,
@@ -65,5 +67,21 @@ export const loginUserCtrl = async (req, res) => {
                 msg: error.message
             }
         )
+    }
+};
+
+export const getUserProfileCtrl = async (req, res) => {
+    try {
+        
+        console.log("🚀 ~ file: UserCtrl.js:74 ~ getUserProfileCtrl ~ req:", req)
+        return res.status(201).json({
+            success: true,
+            msg: "Hello world",
+        })
+    } catch (error) {
+        return res.status(401).json({
+            success: false,
+            mag: error.message
+        })
     }
 };
