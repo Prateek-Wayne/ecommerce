@@ -2,11 +2,8 @@ import Product from '../model/Product.js';
 
 export const createProductCtrl = async (req, res) => {
     try {
-        const { name, description, brand, category, sizes, colors, images, reviews, price, totalQty, } = req.body;
-
-        console.log("reached here...");
+        const { name, description, brand, category, sizes, colors, images, reviews, price, totalQty, } = req.body;;
         const productExist = await Product.find({ name });
-        console.log(productExist);
         if (productExist.length > 0) {
             return res.status(401).json({
                 success: false,
@@ -208,5 +205,33 @@ export const updateProductCtrl = async (req, res) => {
             success: false,
             msg: error.message,
         })
+    }
+}
+
+export const deleteProductCtrl = async (req, res) => {
+    try {
+        const deleteProduct = await Product.findByIdAndDelete(req.params.id);
+        if (!deleteProduct) {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            msg: "Product deleted successfully...❌",
+            deleteProduct
+        })
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+        return res.status(400).json({
+            success: false,
+            error: error.message,
+        });
     }
 }
