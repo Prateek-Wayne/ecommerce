@@ -61,50 +61,48 @@ export const getProductsCtrl = async (req, res) => {
             productsQuery = productsQuery.find({ sizes: { $regex: req.query.sizes, $options: "i" } })
         }
         // price-range...
-        if(req.query.price)
-        {   let range=req.query.price;
-            range=range.split('-');
+        if (req.query.price) {
+            let range = req.query.price;
+            range = range.split('-');
             const minPrice = parseInt(range[0]);
             const maxPrice = parseInt(range[1]);
-            productsQuery = productsQuery.find({ price: { $gte: minPrice, $lte: maxPrice } });   
+            productsQuery = productsQuery.find({ price: { $gte: minPrice, $lte: maxPrice } });
         }
         // pagination....
         // page...
-        const page=parseInt(req.query.page)?parseInt(req.query.page):1;
+        const page = parseInt(req.query.page) ? parseInt(req.query.page) : 1;
         // limit...
-        const limit=parseInt(req.query.limit)?parseInt(req.query.limit):1;
+        const limit = parseInt(req.query.limit) ? parseInt(req.query.limit) : 1;
         // start...
-        const startIndex=(page-1)*limit;
+        const startIndex = (page - 1) * limit;
         // end...
-        const endIndex=(page)*limit;
+        const endIndex = (page) * limit;
         //  total...
-        const total=await Product.countDocuments();
+        const total = await Product.countDocuments();
         // applying...
-        productsQuery=productsQuery.skip(startIndex).limit(limit);
+        productsQuery = productsQuery.skip(startIndex).limit(limit);
         // pagination object...
-        const pagination={}
-        if(endIndex<total)
-        {
-            pagination.next={
-                page:page+1,
+        const pagination = {}
+        if (endIndex < total) {
+            pagination.next = {
+                page: page + 1,
                 limit,
             };
         }
-        if(startIndex>0)
-        {
-            pagination.prev={
-                page:page-1,
-            limit,
+        if (startIndex > 0) {
+            pagination.prev = {
+                page: page - 1,
+                limit,
             };
         }
         // await the query to get data as json...
-        const products=await productsQuery;
+        const products = await productsQuery;
         return res.status(200).json({
-            success:true,
+            success: true,
             total,
-            results:products.length,
+            results: products.length,
             pagination,
-            msg:"Products fetched succcesfully🚀🫡",
+            msg: "Products fetched succcesfully🚀🫡",
             products
         })
     } catch (error) {
@@ -116,19 +114,18 @@ export const getProductsCtrl = async (req, res) => {
     }
 }
 
-export const getProductCtrl=async (req,res)=>{
+export const getProductCtrl = async (req, res) => {
     try {
-        const singleProduct=await Product.findById(req.params.id) ;
-        if(!singleProduct)
-        {
+        const singleProduct = await Product.findById(req.params.id);
+        if (!singleProduct) {
             return res.status(200).json({
-                success:false,
-                msg:"Product Not found 😔",
+                success: false,
+                msg: "Product Not found 😔",
             })
         }
         return res.status(200).json({
-            success:true,
-            msg:"Product fetched successfully..🚀🫡",
+            success: true,
+            msg: "Product fetched successfully..🚀🫡",
             singleProduct
         })
     } catch (error) {
@@ -172,3 +169,44 @@ export const getSingleProductCtrl = async (req, res) => {
     }
 };
 
+export const updateProductCtrl = async (req, res) => {
+    try {
+        const { name, description, brand, category, sizes, colors, images, reviews, price, totalQty, } = req.body;
+        const product = await Product.findByIdAndUpdate(req.params.id,
+            {
+                name,
+                description,
+                brand,
+                sizes,
+                colors,
+                user: req.userAuthId,
+                reviews,
+                price,
+                totalQty,
+            }, { new: true, });
+
+        if (!product) {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+
+        return res.status(201).json({
+            success: true,
+            msg: "Product updated successfuly 🚀🫡",
+            product
+        })
+    } catch (error) {
+        if (error.name === "CastError") {
+            return res.status(200).json({
+                success: false,
+                msg: "Product Not found 😔",
+            });
+        }
+        return res.status(400).json({
+            success: false,
+            msg: error.message,
+        })
+    }
+}
