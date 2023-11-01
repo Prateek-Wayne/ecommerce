@@ -15,10 +15,10 @@ const  ProductSchema=new Schema(
         type:String,
         required:true,
     },
-    catgory:{
+    category:{
         type:String,
         ref:"Category",
-        // required:true,
+        required:true,
     },
     sizes:{
         type:[String],
