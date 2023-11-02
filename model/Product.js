@@ -43,7 +43,7 @@ const  ProductSchema=new Schema(
     reviews:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:"Review"
+            ref:"Review",
         }
     ],
     price:{
