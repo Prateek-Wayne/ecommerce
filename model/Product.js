@@ -66,5 +66,24 @@ const  ProductSchema=new Schema(
     toJSON:{virtuals:true},
 }
 );
+
+// Virtuals New Concept...
+// Total Ratings...
+ProductSchema.virtual('totalRatings').get(function(){
+
+    return this?.reviews?.length;
+    // console.log("This",this);
+})
+
+ProductSchema.virtual('averageRating').get(function(){
+    let ratingsTotal = 0;
+  this.reviews.forEach(review => {
+    ratingsTotal += review.rating;
+  });
+  const average = (ratingsTotal / this.reviews.length) || 0;
+  console.log("🚀 ~ file: Product.js:84 ~ ProductSchema.virtual ~ average:", Number(average.toFixed(2)))
+  return Number(average.toFixed(2));
+})
+
 const Product=mongoose.model("Product",ProductSchema);
 export default Product;
