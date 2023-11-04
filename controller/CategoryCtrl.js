@@ -11,7 +11,7 @@ export const createCategoryCtrl = async (req, res) => {
             name,
             user: req.userAuthId
         });
-        return res.status(200).json({
+        return res.status(201).json({
             success: true,
             msg: "Category Created Successfully",
             newCategory,
@@ -29,7 +29,7 @@ export const getCategoryCtrl = async (req, res) => {
     try {
         const singleCategory = await Category.findById(req.params.id);
         if (!singleCategory) {
-            return res.status(500).json({
+            return res.status(204).json({
                 success: false,
                 msg: "Category does not exist...",
             })
@@ -39,7 +39,7 @@ export const getCategoryCtrl = async (req, res) => {
             singleCategory,
         })
     } catch (error) {
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
             error: error.message
         })
@@ -49,7 +49,7 @@ export const getCategoryCtrl = async (req, res) => {
 export const getCategoriesCtrl = async (req, res) => {
     try {
         const Categories = await Category.find();
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             Categories,
         })
@@ -72,7 +72,7 @@ export const updateCategoryCtrl = async (req, res) => {
             { new: true, }
         )
         if (!updatedCategory) {
-            return res.status(500).json({
+            return res.status(204).json({
                 success: false,
                 msg: "categories not found",
             });
@@ -93,7 +93,7 @@ export const deleteCategoryCtrl = async (req, res) => {
     try {
         const deleted =await Category.findByIdAndDelete(req.params.id);
         if (!deleted) {
-            return res.status(200).json({
+            return res.status(204).json({
                 success: false,
                 msg: "Category Not found 😔",
             })

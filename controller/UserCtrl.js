@@ -9,7 +9,7 @@ export const registerUserCtrl = async (req, res) => {
     const { fullname, email, password } = req.body;
     const userExist = await User.findOne({ email });
     if (userExist) {
-      return res.status(404).json({
+      return res.status(409).json({
         success: false,
         msg: "User already exists",
       });
@@ -55,11 +55,11 @@ export const loginUserCtrl = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      userExist,
+      userExist, 
       token: generateToken(userExist?._id),
     });
   } catch (error) {
-    return res.status(401).json({
+    return res.status(500).json({
       success: false,
       msg: error.message,
     });
@@ -68,13 +68,18 @@ export const loginUserCtrl = async (req, res) => {
 
 export const getUserProfileCtrl = async (req, res) => {
   try {
-    console.log("🚀 ~ file: UserCtrl.js:74 ~ getUserProfileCtrl ~ req:", req);
-    return res.status(201).json({
+    const profile=User.findById(req.params.id);
+    if(!profile)
+    {
+      throw new Error(" Profile not found ,may be User._id is wrong");
+    }
+    return res.status(200).json({
       success: true,
-      msg: "Hello world",
+      msg: "User found 🫡🚀",
+      profile,
     });
   } catch (error) {
-    return res.status(401).json({
+    return res.status(500).json({
       success: false,
       mag: error.message,
     });
