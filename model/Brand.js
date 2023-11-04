@@ -11,9 +11,9 @@ const BrandSchema=new Schema({
         ref:"User",
         required:true,
     },
-    product:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Product",
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
     }]
 },
 {

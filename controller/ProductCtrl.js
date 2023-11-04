@@ -1,3 +1,4 @@
+import Brand from '../model/Brand.js';
 import Category from '../model/Category.js';
 import Product from '../model/Product.js';
 
@@ -12,11 +13,16 @@ export const createProductCtrl = async (req, res) => {
             });
         }
         // category...
-        const categoryFound=await Category.findOne({name:category});
+        const categoryFound = await Category.findOne({ name: category });
         // check if category Exists or Not...
-        if(!categoryFound)
-        {
-            throw new Error("Category not found 😔");
+        if (!categoryFound) {
+            throw new Error("Category not found 😔❌");
+        }
+        // brand...
+        const brandFound = await Brand.findOne({ name: brand });
+        // check if brand Exisits or Not...
+        if (!brandFound) {
+            throw new Error("Brand not found 😔❌")
         }
         // creating new Model...
         const newProduct = await Product.create({
@@ -31,16 +37,19 @@ export const createProductCtrl = async (req, res) => {
             totalQty,
             category
         })
-        // psuhing newProduct in Category Model...
+        // psuhing newProduct In Category Model...
         categoryFound.products.push(newProduct._id);
+        // pushing newProduct In Brand Model...
+        brandFound.products.push(newProduct._id);
         // resaving...
-        await categoryFound.save()
+        await categoryFound.save();
+        await brandFound.save();
         // sending response...
         return res.status(201).json({
             success: true,
             msg: "Product Created",
             newProduct
-        })
+        });
     } catch (error) {
         return res.status(400).json({
             success: false,
