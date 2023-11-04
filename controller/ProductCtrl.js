@@ -117,7 +117,7 @@ export const getProductsCtrl = async (req, res) => {
             };
         }
         // await the query to get data as json...
-        const products = await productsQuery;
+        const products = await productsQuery.populate('reviews');
         return res.status(200).json({
             success: true,
             total,
