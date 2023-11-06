@@ -9,7 +9,7 @@ export const createOrderCtrl=async(req,res)=>{
     try {
         // from body 
         const {orderItems,shippingAddress,totalPrice}=req.body;
-        const user=await User.findById(req.userAuthID);
+        const user=await User.findById(req.userAuthId);
         if(orderItems.length<=0)
         {
             throw new Error("No Order Found...");
@@ -28,20 +28,26 @@ export const createOrderCtrl=async(req,res)=>{
         // updating product totalQty,
         const products = await Product.find({ _id: { $in: orderItems } });
 
+        const saveme = async (param)=>{
+            await  param.save();
+        }
         orderItems?.map((order) => {
             const product = products?.find((product) => {
                 return product._id.toString() === order._id.toString();
             });
-            if(product)
-            {
-                product.totalSold+=order.qty;
+            if(product && (product?.totalQty>= order?.totalQtyBuy ))
+            {   product.totalQty-=order.totalQtyBuy;
+                product.totalSold+=order.totalQtyBuy;
+
+                saveme(product);
             }
         });
         
         
         res.status(202).json({
             success:true,
-            msg:"Order Created Successfully"
+            msg:"Order Created Successfully",
+            order
         });
         
     } catch (error) {
