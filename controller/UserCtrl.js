@@ -55,7 +55,7 @@ export const loginUserCtrl = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      userExist, 
+      userExist,
       token: generateToken(userExist?._id),
     });
   } catch (error) {
@@ -68,9 +68,8 @@ export const loginUserCtrl = async (req, res) => {
 
 export const getUserProfileCtrl = async (req, res) => {
   try {
-    const profile=User.findById(req.params.id);
-    if(!profile)
-    {
+    const profile = User.findById(req.params.id);
+    if (!profile) {
       throw new Error(" Profile not found ,may be User._id is wrong");
     }
     return res.status(200).json({
@@ -85,3 +84,25 @@ export const getUserProfileCtrl = async (req, res) => {
     });
   }
 };
+
+export const updateShippingAddressCtrl = async (req, res) => {
+  try {
+    
+    const { country, province, postalCode, city, lastName, firstName } = req.body;
+  const user = await User.findByIdAndUpdate(req.userAuthId, {
+    shippingAddress: {
+      country, province, postalCode, city, lastName, firstName
+    }
+  });
+  return res.status(201).json({
+    success:true,
+    msg:"added user succesfully",
+    user
+  })
+  } catch (error) {
+    return res.status(500).json({
+      success:false,
+      error:error.message,
+    })
+  }
+}

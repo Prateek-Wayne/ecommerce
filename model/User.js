@@ -28,7 +28,7 @@ const UserSchema = new Schema({
     },
     hasShippingAddress: {
         type: Boolean,
-        default: true,
+        default: false,
     },
     shippingAddress: {
         firstName: {
