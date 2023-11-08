@@ -1,0 +1,2 @@
+MONGO_URI="mongodb+srv://lordprateekverma:3BEkz7JdOaCoLQ2h@cluster0.j2bcqvd.mongodb.net/ecommerce-api?retryWrites=true&w=majority"
+JWT_KEY='ram bharose'
