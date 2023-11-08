@@ -25,6 +25,10 @@ export const createOrderCtrl=async(req,res)=>{
         // saving user...
         user.orders.push(order?._id);
         await user.save();
+        if(!user?.shippingAddress)
+        {
+            throw new Error("Please Provide Shipping Address..."); 
+        }
         // updating product totalQty,
         const products = await Product.find({ _id: { $in: orderItems } });
 

@@ -94,6 +94,11 @@ export const updateShippingAddressCtrl = async (req, res) => {
       country, province, postalCode, city, lastName, firstName
     }
   });
+  await user.save();
+  if(!user?.hasShippingAddress){
+    user.hasShippingAddress=true;
+  }
+  await user.save();
   return res.status(201).json({
     success:true,
     msg:"added user succesfully",
