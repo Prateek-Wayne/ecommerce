@@ -1,9 +1,12 @@
 import Order from '../model/Order.js';
 import User from '../model/User.js';
 import Product from '../model/Product.js';
+import Stripe from 'stripe'
+import dotenv from "dotenv";
 
+dotenv.config();
 
-
+const stripe=new Stripe(process.env.STRIPE_KEY);
 
 export const createOrderCtrl=async(req,res)=>{
     try {
@@ -46,8 +49,30 @@ export const createOrderCtrl=async(req,res)=>{
                 saveme(product);
             }
         });
+        // payments and stirpe
         
+        const session=await stripe.checkout.sessions.create({
+             line_items:[{
+                price_data:{
+                    currency:"inr",
+                    product_data:{
+                        name:"Hats",
+                        description:"Best Hat"
+                    },
+                    unit_amount:10*100
+                },
+                metadata:{
+
+                },
+                quantity:2,
+             },],
+             mode:"payment",
+             success_url:"http://localhost:3000/success",
+             cancel_url:"http://localhost:3000/success",
+        });
         
+        // res.send({url:session.url});
+
         res.status(202).json({
             success:true,
             msg:"Order Created Successfully",

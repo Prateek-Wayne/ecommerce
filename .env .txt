@@ -1,2 +1,3 @@
 MONGO_URI="mongodb+srv://lordprateekverma:3BEkz7JdOaCoLQ2h@cluster0.j2bcqvd.mongodb.net/ecommerce-api?retryWrites=true&w=majority"
 JWT_KEY='ram bharose'
+STRIPE_KEY=sk_test_51OA2IgSBHYsHoKCROWdasevpAOtCNODErduYmH45zzAMerNsVqFWt2kb4dv0HMCwk54qM4tJIFvVRWgQHslkHUBd008BYgtrZO
