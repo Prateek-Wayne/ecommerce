@@ -69,9 +69,6 @@ export const loginUserCtrl = async (req, res) => {
 export const getUserProfileCtrl = async (req, res) => {
   try {
     const profile =await User.findById(req.userAuthId).populate("orders");
-    // if (!profile) {
-    //   throw new Error(" Profile not found ,may be User._id is wrong");
-    // }
     return res.status(200).json({
       success: true,
       msg: "User found 🫡🚀",
