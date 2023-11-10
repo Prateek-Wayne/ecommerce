@@ -3,6 +3,7 @@ import User from '../model/User.js';
 import Product from '../model/Product.js';
 import Stripe from 'stripe'
 import dotenv from "dotenv";
+import Coupon from '../model/Coupon.js';
 
 dotenv.config();
 
@@ -10,6 +11,21 @@ const stripe = new Stripe(process.env.STRIPE_KEY);
 
 export const createOrderCtrl = async (req, res) => {
     try {
+
+        // applying loginc for coupon ...
+        const {coupon}=req?.query;
+        const couponFound=await Coupon.findOne({
+            code:coupon?.toUpperCase()
+        });
+        if(couponFound?.isExpired)
+        {
+            throw new Error("Coupon is expired");
+        }
+        if(!couponFound)
+        {
+            throw new Error("Coupon does not exists");
+        }
+        const discount=couponFound?.discount/100;
         // from body 
         const { orderItems, shippingAddress, totalPrice } = req.body;
         const user = await User.findById(req.userAuthId);
@@ -22,8 +38,9 @@ export const createOrderCtrl = async (req, res) => {
             user: id,
             orderItems,
             shippingAddress,
-            totalPrice
+            totalPrice:couponFound?totalPrice-totalPrice*discount:totalPrice,
         })
+        // console.log(order);
         // saving user...
         user.orders.push(order?._id);
         await user.save();

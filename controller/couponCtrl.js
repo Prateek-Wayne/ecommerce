@@ -13,7 +13,7 @@ export const createCouponCtrl=async(req,res)=>{
             throw new Error("Coupon already Exist");
         }
         const newCoupon=await Coupon.create({
-            code,
+            code:code?.toUpperCase(),
             startDate,
             endDate,
             discount,
