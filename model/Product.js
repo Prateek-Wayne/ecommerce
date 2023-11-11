@@ -37,7 +37,7 @@ const  ProductSchema=new Schema(
     images:[
         {
             type:String,
-            default:"https://via.placeholder.com/150",
+            // default:"https://via.placeholder.com/150",
         }
     ],
     reviews:[
