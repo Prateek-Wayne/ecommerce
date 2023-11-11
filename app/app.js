@@ -9,6 +9,7 @@ import reviewRoutes from '../routes/reviewRoutes.js';
 import orderRoutes from '../routes/orderRoutes.js';
 import Stripe from "stripe";
 import Order from '../model/Order.js';
+import couponRoutes from '../routes/couponRoutes.js';
 dotenv.config();
 database();
 const app = express();
@@ -67,4 +68,5 @@ app.use('/', categoryRoutes);
 app.use('/', brandRoutes);
 app.use('/', reviewRoutes);
 app.use('/', orderRoutes);
+app.use('/',couponRoutes)
 export default app;

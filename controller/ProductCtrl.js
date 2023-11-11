@@ -4,7 +4,8 @@ import Product from '../model/Product.js';
 
 export const createProductCtrl = async (req, res) => {
     try {
-        const { name, description, brand, category, sizes, colors, images, reviews, price, totalQty, } = req.body;;
+        // console.log(req.files.path);
+        const { name, description, brand, category, sizes, colors, reviews, price, totalQty, } = req.body;;
         const productExist = await Product.find({ name });
         if (productExist.length > 0) {
             return res.status(401).json({
@@ -24,6 +25,7 @@ export const createProductCtrl = async (req, res) => {
         if (!brandFound) {
             throw new Error("Brand not found 😔❌")
         }
+        const images = req.files.map(file => file.path); // Extract paths from req.files
         // creating new Model...
         const newProduct = await Product.create({
             name,
@@ -35,7 +37,8 @@ export const createProductCtrl = async (req, res) => {
             reviews,
             price,
             totalQty,
-            category
+            category,
+            images:images
         })
         // psuhing newProduct In Category Model...
         categoryFound.products.push(newProduct._id);

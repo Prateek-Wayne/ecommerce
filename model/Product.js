@@ -37,7 +37,7 @@ const  ProductSchema=new Schema(
     images:[
         {
             type:String,
-            default:"https://via.placeholder.com/150",
+            // default:"https://via.placeholder.com/150",
         }
     ],
     reviews:[
@@ -81,7 +81,7 @@ ProductSchema.virtual('averageRating').get(function(){
     ratingsTotal += review.rating;
   });
   const average = (ratingsTotal / this.reviews.length) || 0;
-  console.log("🚀 ~ file: Product.js:84 ~ ProductSchema.virtual ~ average:", Number(average.toFixed(2)))
+//   console.log("🚀 ~ file: Product.js:84 ~ ProductSchema.virtual ~ average:", Number(average.toFixed(2)))
   return Number(average.toFixed(2));
 })
 

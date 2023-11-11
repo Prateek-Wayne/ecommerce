@@ -9,7 +9,8 @@ export const createCategoryCtrl = async (req, res) => {
         }
         const newCategory = await Category.create({
             name,
-            user: req.userAuthId
+            user: req.userAuthId,
+            image:req.file.path
         });
         return res.status(201).json({
             success: true,
