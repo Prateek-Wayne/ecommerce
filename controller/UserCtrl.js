@@ -68,7 +68,7 @@ export const loginUserCtrl = async (req, res) => {
 
 export const getUserProfileCtrl = async (req, res) => {
   try {
-    const profile =await User.findById(req.userAuthId).populate("orders");
+    const profile = await User.findById(req.userAuthId).populate("orders");
     return res.status(200).json({
       success: true,
       msg: "User found 🫡🚀",
@@ -84,27 +84,32 @@ export const getUserProfileCtrl = async (req, res) => {
 
 export const updateShippingAddressCtrl = async (req, res) => {
   try {
-    
-    const { country, province, postalCode, city, lastName, firstName } = req.body;
-  const user = await User.findByIdAndUpdate(req.userAuthId, {
-    shippingAddress: {
-      country, province, postalCode, city, lastName, firstName
+    const { country, province, postalCode, city, lastName, firstName } =
+      req.body;
+    const user = await User.findByIdAndUpdate(req.userAuthId, {
+      shippingAddress: {
+        country,
+        province,
+        postalCode,
+        city,
+        lastName,
+        firstName,
+      },
+    });
+    await user.save();
+    if (!user?.hasShippingAddress) {
+      user.hasShippingAddress = true;
     }
-  });
-  await user.save();
-  if(!user?.hasShippingAddress){
-    user.hasShippingAddress=true;
-  }
-  await user.save();
-  return res.status(201).json({
-    success:true,
-    msg:"added user succesfully",
-    user
-  })
+    await user.save();
+    return res.status(201).json({
+      success: true,
+      msg: "added user succesfully",
+      user,
+    });
   } catch (error) {
     return res.status(500).json({
-      success:false,
-      error:error.message,
-    })
+      success: false,
+      error: error.message,
+    });
   }
-}
+};

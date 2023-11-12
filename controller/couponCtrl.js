@@ -47,11 +47,11 @@ export const getCoupons = async (req, res) => {
 };
 export const getCoupon = async (req, res) => {
   try {
-    const existingCoupon=await Coupon.findById(req.params.id);
+    const existingCoupon = await Coupon.findById(req.params.id);
     return res.status(201).json({
-        success:true,
-        msg: "Coupon fetched successfully",
-        existingCoupon
+      success: true,
+      msg: "Coupon fetched successfully",
+      existingCoupon,
     });
   } catch (error) {
     return res.status(500).json({
@@ -61,42 +61,46 @@ export const getCoupon = async (req, res) => {
   }
 };
 
-export const updateCoupon=async(req,res)=>{
-    try {
-        const {code,startDate,endDate,discount}=req.body;
-        const updatedCoupon=await Coupon.findByIdAndUpdate(req.params.id,{
-            code:code?.toUpperCase(),
-            startDate,
-            endDate,
-            discount
-        },{
-            new:true
-        })
-        return res.status(201).json({
-            success:true,
-            msg:"Coupon updated succesfully",
-            updatedCoupon
-        })
-    } catch (error) {
-        return res.status(500).json({
-            success:false,
-            error:error.message
-        })
-    }
-}
+export const updateCoupon = async (req, res) => {
+  try {
+    const { code, startDate, endDate, discount } = req.body;
+    const updatedCoupon = await Coupon.findByIdAndUpdate(
+      req.params.id,
+      {
+        code: code?.toUpperCase(),
+        startDate,
+        endDate,
+        discount,
+      },
+      {
+        new: true,
+      },
+    );
+    return res.status(201).json({
+      success: true,
+      msg: "Coupon updated succesfully",
+      updatedCoupon,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
 
-export const deleteCoupon=async(req,res)=>{
-    try {
-        const deletedCoupon=await Coupon.findByIdAndDelete(req.params.id);
-        return res.status(200).json({
-            success:true,
-            msg:"Delted Successfully",
-            deletedCoupon
-        })
-    } catch (error) {
-        return res.status(500).json({
-            success:false,
-            error:error.message
-        })
-    }
-}
+export const deleteCoupon = async (req, res) => {
+  try {
+    const deletedCoupon = await Coupon.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+      success: true,
+      msg: "Delted Successfully",
+      deletedCoupon,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

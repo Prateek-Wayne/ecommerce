@@ -1,24 +1,27 @@
 import mongoose from "mongoose";
-const Schema=mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const BrandSchema=new Schema({
-    name:{
-        type:String,
-        required:true,
+const BrandSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    products: [{
+    products: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
-    }]
-},
-{
-    timestamp:true
-}
+        ref: "Product",
+      },
+    ],
+  },
+  {
+    timestamp: true,
+  },
 );
-const Brand=mongoose.model("Brand",BrandSchema);
+const Brand = mongoose.model("Brand", BrandSchema);
 export default Brand;
