@@ -54,8 +54,6 @@ app.post('/webhook', express.raw({ type: 'application/json' }), async (request, 
       {
         new: true,
       });
-      // await order.save();
-    // console.log(order);
 
   }
   response.send();
