@@ -21,10 +21,10 @@ export const createOrderCtrl = async (req, res) => {
         {
             throw new Error("Coupon is expired");
         }
-        if(!couponFound)
-        {
-            throw new Error("Coupon does not exists");
-        }
+        // if(!couponFound)
+        // {
+        //     throw new Error("Coupon does not exists");
+        // }
         const discount=couponFound?.discount/100;
         // from body 
         const { orderItems, shippingAddress, totalPrice } = req.body;
@@ -49,7 +49,6 @@ export const createOrderCtrl = async (req, res) => {
         }
         // updating product totalQty,
         const products = await Product.find({ _id: { $in: orderItems } });
-
         const saveme = async (param) => {
             await param.save();
         }
