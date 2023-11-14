@@ -32,4 +32,4 @@ Contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md)
 
 ## License
 
-This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the terms of the MIT license.
