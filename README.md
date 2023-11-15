@@ -24,7 +24,7 @@ Detailed API documentation is available [here](https://documenter.getpostman.com
 
 ## Deployment
 
-The project is deployed [here](https://e-commerce-api-c5sx.onrender.com). You can use the deployed APIs as per the documentation.
+The project is deployed [here](https://e-commerce-api-c5sx.onrender.com/api/v1). You can use the deployed APIs as per the documentation.
 
 ## Contributing
 
