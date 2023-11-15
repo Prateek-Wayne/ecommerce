@@ -17,7 +17,7 @@ Detailed API documentation is available [here](https://documenter.getpostman.com
 
 ## Installation
 
-1. Clone the repository: `git clone https://documenter.getpostman.com/view/29655222/2s9YXmWfTu`
+1. Clone the repository: `git clone https://github.com/Prateek-Wayne/ecommerce.git`
 2. Install dependencies: `npm install`
 3. Set environment variables: Create a `.env` file in the root directory and set your environment variables (refer to `.env.example` for the variables you need to set).
 4. Run the server: `npm start`
