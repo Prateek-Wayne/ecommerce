@@ -26,6 +26,8 @@ Detailed API documentation is available [here](https://documenter.getpostman.com
 
 The project is deployed [here](https://e-commerce-api-c5sx.onrender.com/api/v1). You can use the deployed APIs as per the documentation.
 
+All Products URL : https://e-commerce-api-c5sx.onrender.com/api/v1/product.
+
 ## Contributing
 
 Contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md) for more information.
