@@ -3,5 +3,7 @@ WORKDIR /app
 COPY . /app
 RUN npm install
 EXPOSE 3000
-CMD node start
-ENTRYPOINT [ "app" ]
+CMD npm start
+# docker build -t ecommerce:0.0.1.RELEASE .
+# docker container run -d -p 7000:7000 ecommerce:0.0.1.RELEASE
+# docker container ls
