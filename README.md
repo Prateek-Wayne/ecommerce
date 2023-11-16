@@ -17,14 +17,16 @@ Detailed API documentation is available [here](https://documenter.getpostman.com
 
 ## Installation
 
-1. Clone the repository: `git clone https://documenter.getpostman.com/view/29655222/2s9YXmWfTu`
+1. Clone the repository: `git clone https://github.com/Prateek-Wayne/ecommerce.git`
 2. Install dependencies: `npm install`
 3. Set environment variables: Create a `.env` file in the root directory and set your environment variables (refer to `.env.example` for the variables you need to set).
 4. Run the server: `npm start`
 
 ## Deployment
 
-The project is deployed [here](https://e-commerce-api-c5sx.onrender.com). You can use the deployed APIs as per the documentation.
+The project is deployed [here](https://e-commerce-api-c5sx.onrender.com/api/v1). You can use the deployed APIs as per the documentation.
+
+All Products URL : https://e-commerce-api-c5sx.onrender.com/api/v1/product.
 
 ## Contributing
 
@@ -32,4 +34,4 @@ Contributions are welcome! Please read the [contributing guide](CONTRIBUTING.md)
 
 ## License
 
-This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the terms of the MIT license.
